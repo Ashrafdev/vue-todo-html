@@ -37,9 +37,14 @@
 
     <div class="container">
 
-      <div class="starter-template">
-        <h1>Bootstrap starter template</h1>
-        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
+     <div id="app">
+        <p>Total: {{ total }}</p>
+        <ul>
+          <li v-for="todo in todos">
+          {{ todo.text }} <a href="#" v-on:click="done(todo)" v-show="!todo.done">Done</a><br>
+          {{ todo.text | reverse }}<br><br>
+          </li>
+        </ul>
       </div>
 
     </div><!-- /.container -->
