@@ -13,52 +13,29 @@
 <![endif]-->
 </head>
 <body>
+<div class="container">
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Project name</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
+ <div id="app">
+    <select class="pull-left" v-model="filter" v-on:change="filterTodos()">
+      <option value="pending">Pending</option>
+      <option value="done">Done</option>
+      <option value="all">All</option>
+    </select>
+    <p class="pull-right">{{ done }} / {{ total }}</p>
+    <div class="form-group">
+      <input class="form-control" placeholder="Enter new todo" v-model="newTodo" v-on:keyup.enter="addNew()">
+    </div>
+    <ul id="todos" class="list-group">
+      <li class="list-group-item" v-if="empty">No todo item.</li>
+      <li class="list-group-item" v-bind:class="{'list-group-item-success': todo.done }" v-for="todo in filteredTodos">
+      {{ todo.text }}
+      <span class="pull-right glyphicon" v-bind:class="{'glyphicon-ok': !todo.done, 'glyphicon-check': todo.done}" v-on:click="markAsDone(todo)"></span>
+      </a>
+      </li>
+    </ul>
+  </div>
 
-    <div class="container">
-
-     <div id="app">
-        <select class="pull-left" v-model="filter" v-on:change="filterTodos()">
-          <option value="pending">Pending</option>
-          <option value="done">Done</option>
-          <option value="all">All</option>
-        </select>
-        <p class="pull-right">{{ done }} / {{ total }}</p>
-        <div class="form-group">
-          <input class="form-control" placeholder="Enter new todo" v-model="newTodo" v-on:keyup.enter="addNew()">
-        </div>
-        <ul id="todos" class="list-group">
-          <li class="list-group-item" v-if="empty">No todo item.</li>
-          <li class="list-group-item" v-bind:class="{'list-group-item-success': todo.done }" v-for="todo in filteredTodos">
-          {{ todo.text }}
-          <span class="pull-right glyphicon" v-bind:class="{'glyphicon-ok': !todo.done, 'glyphicon-check': todo.done}" v-on:click="markAsDone(todo)"></span>
-          </a>
-          </li>
-        </ul>
-      </div>
-
-    </div><!-- /.container -->
-
+</div><!-- /.container -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
