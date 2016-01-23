@@ -38,11 +38,15 @@
     <div class="container">
 
      <div id="app">
-        <p>Total: {{ total }}</p>
-        <ul>
-          <li v-for="todo in todos">
-          {{ todo.text }} <a href="#" v-on:click="done(todo)" v-show="!todo.done">Done</a><br>
-          {{ todo.text | reverse }}<br><br>
+        <p>Total: {{ total }} | Done: {{ done }}</p>
+        <p v-if="newTodo.length > 0">{{ newTodo }}</p>
+        <div class="form-group">
+          <input class="form-control" placeholder="Enter new todo" v-model="newTodo" v-on:keyup.enter="addNew()">
+        </div>
+        <ul id="todos" class="list-group">
+          <li class="list-group-item" v-if="empty">No todo item yet.</li>
+          <li class="list-group-item" v-for="todo in todos">
+          {{ todo.text }} <a href="#" v-on:click="markAsDone(todo)" v-show="!todo.done">Done</a>
           </li>
         </ul>
       </div>
