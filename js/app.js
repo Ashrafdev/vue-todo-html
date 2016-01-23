@@ -5,7 +5,9 @@ Vue.filter('reverse', function (value) {
 var vm = new Vue({
   el: '#app',
   data: {
+    filter: 'pending',
     todos: [],
+    filteredTodos: [],
   },
   computed: {
   	total: function() {
@@ -17,7 +19,7 @@ var vm = new Vue({
       }).length;
     },
     empty: function() {
-      return this.todos.length == 0;
+      return this.filteredTodos.length == 0;
     }
   },
   ready: function() {
@@ -29,6 +31,8 @@ var vm = new Vue({
     } else {
       localStorage.setItem('todos', JSON.parse(this.todos));
     }
+
+    this.filterTodos();
   },
   methods: {
     addNew: function() {
@@ -41,6 +45,20 @@ var vm = new Vue({
     markAsDone: function(todo) {
       todo.done = true;
       this.sync();
+      this.filterTodos();
+    },
+    filterTodos: function() {
+      if(this.filter == 'pending') {
+        this.filteredTodos = this.todos.filter(function(todo) {
+          return todo.done == false;
+        });
+      } else if(this.filter == 'done') {
+        this.filteredTodos = this.todos.filter(function(todo) {
+          return todo.done;
+        });
+      } else {
+        this.filteredTodos = this.todos;
+      }
     },
     sync: function() {
       todos_text = JSON.stringify(this.todos);

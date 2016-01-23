@@ -38,15 +38,21 @@
     <div class="container">
 
      <div id="app">
-        <p>Total: {{ total }} | Done: {{ done }}</p>
-        <p v-if="newTodo.length > 0">{{ newTodo }}</p>
+        <select class="pull-left" v-model="filter" v-on:change="filterTodos()">
+          <option value="pending">Pending</option>
+          <option value="done">Done</option>
+          <option value="all">All</option>
+        </select>
+        <p class="pull-right">{{ done }} / {{ total }}</p>
         <div class="form-group">
           <input class="form-control" placeholder="Enter new todo" v-model="newTodo" v-on:keyup.enter="addNew()">
         </div>
         <ul id="todos" class="list-group">
-          <li class="list-group-item" v-if="empty">No todo item yet.</li>
-          <li class="list-group-item" v-for="todo in todos">
-          {{ todo.text }} <a href="#" v-on:click="markAsDone(todo)" v-show="!todo.done">Done</a>
+          <li class="list-group-item" v-if="empty">No todo item.</li>
+          <li class="list-group-item" v-bind:class="{'list-group-item-success': todo.done }" v-for="todo in filteredTodos">
+          {{ todo.text }}
+          <span class="pull-right glyphicon" v-bind:class="{'glyphicon-ok': !todo.done, 'glyphicon-check': todo.done}" v-on:click="markAsDone(todo)"></span>
+          </a>
           </li>
         </ul>
       </div>
